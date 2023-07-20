@@ -2,10 +2,14 @@
 	<div class="list">
 		<div class="list__title">
 			<UiCheckbox />
-			List
+			List {{ index + 1 }}
 		</div>
 		<div class="list__items">
-			<AppItem />
+			<AppItem
+				v-for="item in list"
+				:key="item.id"
+				:item="item"
+			/>
 		</div>
 	</div>
 </template>
@@ -15,6 +19,10 @@ import AppItem from './AppItem.vue'
 import UiCheckbox from './Ui/UiCheckbox.vue'
 export default {
 	name: 'List',
+	props: {
+		list: Array,
+		index: Number,
+	},
 	components: {
 		AppItem,
 		UiCheckbox,
@@ -38,5 +46,8 @@ export default {
 .list__items {
 	margin-left: 20px;
 	margin-top: 8px;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
 }
 </style>

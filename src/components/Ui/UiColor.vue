@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<label :style="{ 'background-color': backgroundColor }">
+		<label :style="{ 'background-color': color }">
 			<input
 				type="color"
 				class="ui-color"
@@ -13,14 +13,12 @@
 <script>
 export default {
 	name: 'UiColor',
-	data() {
-		return {
-			backgroundColor: 'black',
-		}
+	props: {
+		color: String,
 	},
 	methods: {
 		changeColor(event) {
-			this.backgroundColor = event.target.value
+			this.$emit('change-color', event.target.value)
 		},
 	},
 }
