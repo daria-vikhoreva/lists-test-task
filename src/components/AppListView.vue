@@ -1,21 +1,53 @@
 <template>
 	<div class="list-view">
 		<div class="list-view__wrapper">
-			<div class="list-view__title">List 1</div>
-			<div class="list-view__button">
-				<UiButton />
+			<div class="list-view__title">List {{ index + 1 }}</div>
+			<UiButton class="list-view__button" />
+		</div>
+		<div class="list-view__items">
+			<div
+				v-for="item in list"
+				:key="item.id"
+				class="list-view__item"
+			>
+				<template v-if="item.checked">
+					<div
+						v-for="(_, index) in item.count"
+						:key="index"
+						class="item"
+						:style="{ 'background-color': item.color }"
+						@click="deleteItem(item)"
+					></div>
+				</template>
 			</div>
 		</div>
-		<div class="list-view__items">Items</div>
 	</div>
 </template>
 
 <script>
 import UiButton from './Ui/UiButton.vue'
+import { mapStores } from 'pinia'
+import { useListsStore } from '../stores/index'
+
 export default {
 	name: 'AppListView',
+	props: {
+		list: {
+			item: Object,
+		},
+		index: Number,
+	},
 	components: {
 		UiButton,
+	},
+	methods: {
+		deleteItem(item) {
+			item.count = item.count - 1
+			this.listsStore.setCount(item, item.count)
+		},
+	},
+	computed: {
+		...mapStores(useListsStore),
 	},
 }
 </script>
@@ -28,5 +60,16 @@ export default {
 .list-view__wrapper {
 	display: flex;
 	justify-content: space-between;
+}
+.list-view__item {
+	margin-top: 4px;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 3px;
+	cursor: pointer;
+}
+.item {
+	width: 10px;
+	height: 10px;
 }
 </style>

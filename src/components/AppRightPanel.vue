@@ -1,6 +1,11 @@
 <template>
 	<div class="right-panel">
-		<AppListView v-for="i in 5" />
+		<AppListView
+			v-for="(list, index) in lists"
+			:key="index"
+			:list="list"
+			:index="index"
+		/>
 	</div>
 </template>
 
@@ -8,6 +13,9 @@
 import AppListView from './AppListView.vue'
 export default {
 	name: 'AppRightPanel',
+	props: {
+		lists: Array,
+	},
 	components: {
 		AppListView,
 	},
@@ -19,7 +27,6 @@ export default {
 	padding: 30px;
 	border: 2px solid black;
 	width: 30vw;
-	height: 100vh;
 	display: flex;
 	flex-direction: column;
 	gap: 14px;
