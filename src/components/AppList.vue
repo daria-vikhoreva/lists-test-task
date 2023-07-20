@@ -12,7 +12,10 @@
 					:class="{ dropdown_rotate: listIsOpen }"
 				/>
 			</div>
-			<UiCheckbox class="list__checkbox" />
+			<UiCheckbox
+				class="list__checkbox"
+				@click="checkedAll"
+			/>
 			List {{ index + 1 }}
 		</div>
 		<div
@@ -31,6 +34,9 @@
 <script>
 import AppItem from './AppItem.vue'
 import UiCheckbox from './Ui/UiCheckbox.vue'
+import { mapStores } from 'pinia'
+import { useListsStore } from '../stores/index'
+
 export default {
 	name: 'List',
 	components: {
@@ -46,9 +52,15 @@ export default {
 			listIsOpen: true,
 		}
 	},
+	computed: {
+		...mapStores(useListsStore),
+	},
 	methods: {
 		toggleList() {
 			this.listIsOpen = !this.listIsOpen
+		},
+		checkedAll() {
+			this.listsStore.toggleCheckedList(this.index)
 		},
 	},
 }
@@ -60,13 +72,11 @@ export default {
 	flex-direction: column;
 	gap: 4px;
 }
-
 .list__title {
 	display: flex;
 	gap: 10px;
 	font-size: 18px;
 }
-
 .list__items {
 	margin-left: 20px;
 	margin-top: 8px;
@@ -74,7 +84,6 @@ export default {
 	flex-direction: column;
 	gap: 8px;
 }
-
 .dropdown {
 	width: 20px;
 	cursor: pointer;

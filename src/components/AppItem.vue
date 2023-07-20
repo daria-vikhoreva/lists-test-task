@@ -46,13 +46,13 @@ export default {
 	},
 	methods: {
 		changeColor(color) {
-			this.listsStore.setColor(this.item, color)
+			this.listsStore.setColor(this.item.id, color)
 		},
 		changeCount(count) {
-			this.listsStore.setCount(this.item, count)
+			this.listsStore.setCount(this.item.id, count)
 		},
 		toggleChecked(item) {
-			this.listsStore.toggleChecked(item)
+			this.listsStore.toggleChecked(item.id)
 		},
 	},
 }

@@ -46,7 +46,7 @@ export default {
 	methods: {
 		deleteItem(item) {
 			item.count = item.count - 1
-			this.listsStore.setCount(item, item.count)
+			this.listsStore.setCount(item.id, item.count)
 		},
 	},
 }

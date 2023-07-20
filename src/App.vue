@@ -1,6 +1,7 @@
 <script>
 import AppLeftPanel from './components/AppLeftPanel.vue'
 import AppRightPanel from './components/AppRightPanel.vue'
+import { computed } from 'vue'
 
 import { useListsStore } from './stores/index'
 
@@ -12,9 +13,10 @@ export default {
 	},
 	setup() {
 		const listsStore = useListsStore()
+		const lists = computed(() => listsStore.lists)
 
 		return {
-			lists: listsStore.lists,
+			lists,
 		}
 	},
 }
