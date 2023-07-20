@@ -31,23 +31,23 @@ import { useListsStore } from '../stores/index'
 
 export default {
 	name: 'AppListView',
+	components: {
+		UiButton,
+	},
 	props: {
 		list: {
 			item: Object,
 		},
 		index: Number,
 	},
-	components: {
-		UiButton,
+	computed: {
+		...mapStores(useListsStore),
 	},
 	methods: {
 		deleteItem(item) {
 			item.count = item.count - 1
 			this.listsStore.setCount(item, item.count)
 		},
-	},
-	computed: {
-		...mapStores(useListsStore),
 	},
 }
 </script>

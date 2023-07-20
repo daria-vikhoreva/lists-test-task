@@ -3,24 +3,24 @@
 		<div class="left">
 			<input
 				type="checkbox"
-				class="input__checkbox"
 				:checked="item.checked"
 				@change="toggleChecked(item)"
+				class="input__checkbox"
 			/>
 			{{ item.name }}
 		</div>
 		<div class="right">
 			<input
-				@change="changeCount(item.count)"
 				type="number"
 				min="0"
 				max="100"
 				v-model.number="item.count"
+				@change="changeCount(item.count)"
 				class="item__input"
 			/>
 			<UiColor
-				@change-color="changeColor"
 				:color="item.color"
+				@change-color="changeColor"
 				class="item__color"
 			/>
 		</div>
@@ -34,12 +34,15 @@ import { useListsStore } from '../stores/index'
 
 export default {
 	name: 'AppItem',
+	components: {
+		UiColor,
+	},
 	props: {
 		item: Object,
 	},
 	emits: ['change-color'],
-	components: {
-		UiColor,
+	computed: {
+		...mapStores(useListsStore),
 	},
 	methods: {
 		changeColor(color) {
@@ -51,9 +54,6 @@ export default {
 		toggleChecked(item) {
 			this.listsStore.toggleChecked(item)
 		},
-	},
-	computed: {
-		...mapStores(useListsStore),
 	},
 }
 </script>

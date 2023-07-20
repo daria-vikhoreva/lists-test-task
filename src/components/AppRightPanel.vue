@@ -13,11 +13,11 @@
 import AppListView from './AppListView.vue'
 export default {
 	name: 'AppRightPanel',
-	props: {
-		lists: Array,
-	},
 	components: {
 		AppListView,
+	},
+	props: {
+		lists: Array,
 	},
 }
 </script>

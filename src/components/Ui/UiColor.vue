@@ -3,8 +3,8 @@
 		<label :style="{ 'background-color': color }">
 			<input
 				type="color"
-				class="ui-color"
 				@change="changeColor"
+				class="ui-color"
 			/>
 		</label>
 	</div>

@@ -4,9 +4,9 @@
 			<AppList
 				v-for="(list, index) in lists"
 				:key="index"
-				class="left-panel__list"
 				:list="list"
 				:index="index"
+				class="left-panel__list"
 			/>
 		</div>
 	</div>
@@ -17,11 +17,11 @@ import AppList from './AppList.vue'
 
 export default {
 	name: 'AppLeftPanel',
-	props: {
-		lists: Array,
-	},
 	components: {
 		AppList,
+	},
+	props: {
+		lists: Array,
 	},
 }
 </script>
