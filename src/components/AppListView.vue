@@ -2,21 +2,38 @@
 	<div class="list-view">
 		<div class="list-view__wrapper">
 			<div class="list-view__title">List {{ index + 1 }}</div>
-			<UiButton class="list-view__button" />
+			<UiButton
+				class="list-view__button"
+				@click="toggleSortAndMix"
+			>
+				{{ isSorted ? 'Перемешать' : 'Сортировать' }}</UiButton
+			>
 		</div>
 		<div class="list-view__items">
 			<div
+				v-if="!isSorted && mixedList"
+				class="list-view__row"
+			>
+				<div
+					v-for="(elem, index) in mixedList"
+					:key="index"
+					class="item"
+					:style="{ 'background-color': elem[1] }"
+					@click="deleteItem(elem[0])"
+				></div>
+			</div>
+			<div
 				v-for="item in list"
 				:key="item.id"
-				class="list-view__item"
+				class="list-view__row"
 			>
-				<template v-if="item.checked">
+				<template v-if="isSorted && item.checked">
 					<div
 						v-for="(_, index) in item.count"
 						:key="index"
 						class="item"
 						:style="{ 'background-color': item.color }"
-						@click="deleteItem(item)"
+						@click="deleteItem(item.id)"
 					></div>
 				</template>
 			</div>
@@ -40,13 +57,28 @@ export default {
 		},
 		index: Number,
 	},
+	data() {
+		return {
+			isSorted: true,
+		}
+	},
 	computed: {
 		...mapStores(useListsStore),
+		mixedList() {
+			if (!this.isSorted) {
+				return this.listsStore.mixItems(this.index)
+			} else {
+				return []
+			}
+		},
 	},
 	methods: {
-		deleteItem(item) {
-			item.count = item.count - 1
-			this.listsStore.setCount(item.id, item.count)
+		deleteItem(id) {
+			this.listsStore.deleteItem(id)
+		},
+
+		toggleSortAndMix() {
+			this.isSorted = !this.isSorted
 		},
 	},
 }
@@ -61,7 +93,10 @@ export default {
 	display: flex;
 	justify-content: space-between;
 }
-.list-view__item {
+.list-view__items {
+	margin-top: 6px;
+}
+.list-view__row {
 	margin-top: 4px;
 	display: flex;
 	flex-wrap: wrap;

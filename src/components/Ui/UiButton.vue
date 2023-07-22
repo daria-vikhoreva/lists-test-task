@@ -1,5 +1,7 @@
 <template>
-	<button class="button">Перемешать</button>
+	<button class="button">
+		<slot></slot>
+	</button>
 </template>
 
 <script>

@@ -15,7 +15,7 @@
 				min="0"
 				max="100"
 				v-model.number="item.count"
-				@change="changeCount(item.count)"
+				@input="changeCount(item.count)"
 				class="item__input"
 			/>
 			<UiColor
@@ -45,11 +45,11 @@ export default {
 		...mapStores(useListsStore),
 	},
 	methods: {
-		changeColor(color) {
-			this.listsStore.setColor(this.item.id, color)
+		changeColor(newColor) {
+			this.listsStore.setParameter(this.item.id, 'color', newColor)
 		},
-		changeCount(count) {
-			this.listsStore.setCount(this.item.id, count)
+		changeCount(newCount) {
+			this.listsStore.setParameter(this.item.id, 'count', newCount)
 		},
 		toggleChecked(item) {
 			this.listsStore.toggleChecked(item.id)
