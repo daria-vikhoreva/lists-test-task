@@ -7,12 +7,16 @@ export const useListsStore = defineStore('lists', () => {
 
 	const setParameter = (id, parameter, value) => {
 		const item = findItemById(id)
-		item[parameter] = value
+		if (item) {
+			item[parameter] = value
+		}
 	}
 
 	const deleteItem = (id) => {
 		const item = findItemById(id)
-		item.count = item.count - 1
+		if (item) {
+			item.count -= 1
+		}
 	}
 
 	const findItemById = (id) => {
@@ -25,17 +29,6 @@ export const useListsStore = defineStore('lists', () => {
 		return null
 	}
 
-	const findListByItemId = (id) => {
-		for (let i = 0; i < lists.length; i++) {
-			const list = lists[i]
-			const foundItem = list.find((item) => item.id === id)
-			if (foundItem) {
-				return i
-			}
-		}
-		return null
-	}
-
 	const toggleChecked = (id) => {
 		const item = findItemById(id)
 		if (item) {
@@ -43,18 +36,26 @@ export const useListsStore = defineStore('lists', () => {
 		}
 	}
 
-	const toggleCheckedList = (listIndex) => {
+	const hasUncheckedItems = (listIndex) => {
 		const allChecked = lists[listIndex].every((item) => item.checked)
 		const someChecked = lists[listIndex].some((item) => item.checked)
 
-		if (someChecked && !allChecked) {
-			return true
-		} else {
-			lists[listIndex] = lists[listIndex].map((item) => {
-				item.checked = !allChecked
-				return item
-			})
-		}
+		return someChecked && !allChecked
+	}
+
+	const allItemsChecked = (listIndex) => {
+		const allChecked = lists[listIndex].every((item) => item.checked)
+
+		return allChecked
+	}
+
+	const toggleCheckedList = (listIndex) => {
+		const allChecked = lists[listIndex].every((item) => item.checked)
+
+		lists[listIndex] = lists[listIndex].map((item) => {
+			item.checked = !allChecked
+			return item
+		})
 	}
 
 	const mixItems = (listIndex) => {
@@ -79,7 +80,8 @@ export const useListsStore = defineStore('lists', () => {
 		lists,
 		setParameter,
 		deleteItem,
-		findListByItemId,
+		hasUncheckedItems,
+		allItemsChecked,
 		toggleChecked,
 		toggleCheckedList,
 		mixItems,

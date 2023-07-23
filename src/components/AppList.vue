@@ -14,7 +14,9 @@
 			</div>
 			<UiCheckbox
 				class="list__checkbox"
-				@click="checkedAll"
+				@change-checkbox="toggleCheckbox"
+				:all-checked="areAllItemsChecked()"
+				:some-checked="hasSomeItemsChecked()"
 			/>
 			List {{ index + 1 }}
 		</div>
@@ -59,8 +61,14 @@ export default {
 		toggleList() {
 			this.listIsOpen = !this.listIsOpen
 		},
-		checkedAll() {
+		toggleCheckbox() {
 			this.listsStore.toggleCheckedList(this.index)
+		},
+		areAllItemsChecked() {
+			return this.listsStore.allItemsChecked(this.index)
+		},
+		hasSomeItemsChecked() {
+			return this.listsStore.hasUncheckedItems(this.index)
 		},
 	},
 }
